@@ -49,8 +49,3 @@ class TestReceiveHotelInfo:
         with allure.step('Проверяем код ошибки'):
             assert response.status_code == 400
 
-
-
-
-
-#'id': 535, 'name': 'Отель «Вилла Олива» , API', 'phone': '+799955555', 'email': 'alena.s@bnovo.ru', 'address': 'Санкт-Петербург, Коломяжский пр-кт, 15, к 2',
