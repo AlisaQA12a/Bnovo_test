@@ -1,3 +1,5 @@
+import pytest
+
 from urls import Urls
 import requests
 import allure
@@ -32,8 +34,9 @@ class TestPlans:
 
     @allure.title('Полечение ошибки при невалидном параметре account_id')
     @allure.description('Передаем невалидный обязательный параметр account_id в тело запроса')
-    def test_get_room_category_invalid_account_id(self):
-        response = requests.get(Urls.GET_PLANS, data={"account_id": Plans.account_id_invalid})
+    @pytest.mark.parametrize('account_id_invalid', ['808080808', '#$%', 'd7494710-8c8c-4c4c-bba4-f71caf96',808080808])
+    def test_get_room_category_invalid_account_id(self, account_id_invalid):
+        response = requests.get(Urls.GET_PLANS, data={"account_id": account_id_invalid})
         with allure.step('Проверяем код ошибки'):
             assert response.status_code == 404
 

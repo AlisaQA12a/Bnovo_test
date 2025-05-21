@@ -1,3 +1,5 @@
+import pytest
+
 from urls import Urls
 import requests
 import allure
@@ -34,8 +36,9 @@ class TestReceiveHotelInfo:
 
     @allure.title("Получение ошибки при передаче некорректного uid в тело запроса")
     @allure.description("Передаем некорректный uid в тело запроса")
-    def test_get_hotel_data_with_invalid_uid(self):
-        response = requests.get(Urls.GET_HOTEL_INFO, data={"uid": HotelInfo.hotel_uid_invalid})
+    @pytest.mark.parametrize('uid_invalid',['123','!!!','d7494710-8c8c-4c4c-bba4-f71caf96', 123])
+    def test_get_hotel_data_with_invalid_uid(self, uid_invalid):
+        response = requests.get(Urls.GET_HOTEL_INFO, data={"uid":uid_invalid})
         with allure.step('Проверяем код ошибки'):
             assert response.status_code == 404
 
